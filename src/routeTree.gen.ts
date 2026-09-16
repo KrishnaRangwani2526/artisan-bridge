@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArtisanAppRouteImport } from './routes/artisan-app'
+import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as PostRouteImport } from './routes/post'
+import { Route as RequirementRouteImport } from './routes/requirement'
+import { Route as ArtisansArtisanIdRouteImport } from './routes/artisans.$artisanId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArtisanAppRoute = ArtisanAppRouteImport.update({
+  id: '/artisan-app',
+  path: '/artisan-app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscoverRoute = DiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostRoute = PostRouteImport.update({
+  id: '/post',
+  path: '/post',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequirementRoute = RequirementRouteImport.update({
+  id: '/requirement',
+  path: '/requirement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtisansArtisanIdRoute = ArtisansArtisanIdRouteImport.update({
+  id: '/artisans/$artisanId',
+  path: '/artisans/$artisanId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/artisan-app': typeof ArtisanAppRoute
+  '/discover': typeof DiscoverRoute
+  '/post': typeof PostRoute
+  '/requirement': typeof RequirementRoute
+  '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/artisan-app': typeof ArtisanAppRoute
+  '/discover': typeof DiscoverRoute
+  '/post': typeof PostRoute
+  '/requirement': typeof RequirementRoute
+  '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/artisan-app': typeof ArtisanAppRoute
+  '/discover': typeof DiscoverRoute
+  '/post': typeof PostRoute
+  '/requirement': typeof RequirementRoute
+  '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/artisan-app'
+    | '/discover'
+    | '/post'
+    | '/requirement'
+    | '/artisans/$artisanId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/artisan-app'
+    | '/discover'
+    | '/post'
+    | '/requirement'
+    | '/artisans/$artisanId'
+  id:
+    | '__root__'
+    | '/'
+    | '/artisan-app'
+    | '/discover'
+    | '/post'
+    | '/requirement'
+    | '/artisans/$artisanId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ArtisanAppRoute: typeof ArtisanAppRoute
+  DiscoverRoute: typeof DiscoverRoute
+  PostRoute: typeof PostRoute
+  RequirementRoute: typeof RequirementRoute
+  ArtisansArtisanIdRoute: typeof ArtisansArtisanIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/artisan-app': {
+      id: '/artisan-app'
+      path: '/artisan-app'
+      fullPath: '/artisan-app'
+      preLoaderRoute: typeof ArtisanAppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discover': {
+      id: '/discover'
+      path: '/discover'
+      fullPath: '/discover'
+      preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/post': {
+      id: '/post'
+      path: '/post'
+      fullPath: '/post'
+      preLoaderRoute: typeof PostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/requirement': {
+      id: '/requirement'
+      path: '/requirement'
+      fullPath: '/requirement'
+      preLoaderRoute: typeof RequirementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artisans/$artisanId': {
+      id: '/artisans/$artisanId'
+      path: '/artisans/$artisanId'
+      fullPath: '/artisans/$artisanId'
+      preLoaderRoute: typeof ArtisansArtisanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ArtisanAppRoute: ArtisanAppRoute,
+  DiscoverRoute: DiscoverRoute,
+  PostRoute: PostRoute,
+  RequirementRoute: RequirementRoute,
+  ArtisansArtisanIdRoute: ArtisansArtisanIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
