@@ -17,7 +17,7 @@ export const Route = createFileRoute("/post")({
       },
     ],
   }),
-  component: PostRequirement;
+  component: PostRequirement,
 });
 
 function PostRequirement() {
