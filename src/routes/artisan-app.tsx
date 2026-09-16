@@ -22,7 +22,8 @@ export const Route = createFileRoute("/artisan-app")({
 });
 
 function ArtisanApp() {
-  const [accepted, setAccepted] = useState<string[]>([]);
+  const [replies, setReplies] = useState<Record<string, "yes" | "no">>({});
+  const accepted = Object.values(replies).filter((v) => v === "yes");
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
