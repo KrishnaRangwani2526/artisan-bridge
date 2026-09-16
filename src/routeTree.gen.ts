@@ -15,6 +15,7 @@ import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as PostRouteImport } from './routes/post'
 import { Route as RequirementRouteImport } from './routes/requirement'
 import { Route as ArtisansArtisanIdRouteImport } from './routes/artisans.$artisanId'
+import { Route as ProductsProductIdRouteImport } from './routes/products.$productId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const ArtisansArtisanIdRoute = ArtisansArtisanIdRouteImport.update({
   path: '/artisans/$artisanId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
+  id: '/products/$productId',
+  path: '/products/$productId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/post': typeof PostRoute
   '/requirement': typeof RequirementRoute
   '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
+  '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/post': typeof PostRoute
   '/requirement': typeof RequirementRoute
   '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
+  '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/post': typeof PostRoute
   '/requirement': typeof RequirementRoute
   '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
+  '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/post'
     | '/requirement'
     | '/artisans/$artisanId'
+    | '/products/$productId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/post'
     | '/requirement'
     | '/artisans/$artisanId'
+    | '/products/$productId'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/post'
     | '/requirement'
     | '/artisans/$artisanId'
+    | '/products/$productId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   PostRoute: typeof PostRoute
   RequirementRoute: typeof RequirementRoute
   ArtisansArtisanIdRoute: typeof ArtisansArtisanIdRoute
+  ProductsProductIdRoute: typeof ProductsProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArtisansArtisanIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/$productId': {
+      id: '/products/$productId'
+      path: '/products/$productId'
+      fullPath: '/products/$productId'
+      preLoaderRoute: typeof ProductsProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   PostRoute: PostRoute,
   RequirementRoute: RequirementRoute,
   ArtisansArtisanIdRoute: ArtisansArtisanIdRoute,
+  ProductsProductIdRoute: ProductsProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

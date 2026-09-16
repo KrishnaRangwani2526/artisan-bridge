@@ -1,11 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { artisans } from "@/lib/data";
+import { artisans, productsByArtisan } from "@/lib/data";
 
 export const Route = createFileRoute("/artisans/$artisanId")({
   loader: ({ params }) => {
     const artisan = artisans.find((a) => a.id === params.artisanId);
     if (!artisan) throw notFound();
-    return { artisan };
+    return { artisan, work: productsByArtisan(artisan.id) };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
