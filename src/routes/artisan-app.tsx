@@ -22,7 +22,8 @@ export const Route = createFileRoute("/artisan-app")({
 });
 
 function ArtisanApp() {
-  const [accepted, setAccepted] = useState<string[]>([]);
+  const [replies, setReplies] = useState<Record<string, "yes" | "no">>({});
+  const accepted = Object.values(replies).filter((v) => v === "yes");
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -43,24 +44,44 @@ function ArtisanApp() {
           </div>
           <div className="space-y-4">
             {openRequirements.map((r) => {
-              const isAccepted = accepted.includes(r.title);
+              const reply = replies[r.title];
               return (
                 <div key={r.title} className="rounded-sm border border-input p-5">
                   <p className="font-display text-xl">{r.title}</p>
                   <p className="mt-2 text-sm text-muted-foreground">
                     {r.qty} · {r.budget} · {r.city}
                   </p>
+                  {"buyer" in r && (
+                    <p className="mt-1 text-xs text-muted-foreground">Buyer: {(r as { buyer: string }).buyer}</p>
+                  )}
+                  {"note" in r && (
+                    <p className="mt-2 text-sm text-foreground/70">{(r as { note: string }).note}</p>
+                  )}
                   <p className="mt-1 text-xs text-muted-foreground">Posted {r.posted}</p>
-                  <button
-                    onClick={() => setAccepted((prev) => (isAccepted ? prev : [...prev, r.title]))}
-                    className={`mt-4 w-full rounded-sm px-4 py-4 text-sm font-semibold tracking-wide ${
-                      isAccepted
-                        ? "border border-terra text-terra"
-                        : "bg-terra text-ivory"
-                    }`}
-                  >
-                    {isAccepted ? "SENT — WAITING FOR BUYER" : "I CAN MAKE THIS"}
-                  </button>
+                  {reply ? (
+                    <p
+                      className={`mt-4 rounded-sm border px-4 py-4 text-center text-sm font-semibold ${
+                        reply === "yes" ? "border-terra text-terra" : "border-input text-muted-foreground"
+                      }`}
+                    >
+                      {reply === "yes" ? "SENT — WAITING FOR BUYER" : "DECLINED"}
+                    </p>
+                  ) : (
+                    <div className="mt-4 grid gap-3 sm:grid-cols-[2fr_1fr]">
+                      <button
+                        onClick={() => setReplies((p) => ({ ...p, [r.title]: "yes" }))}
+                        className="rounded-sm bg-terra px-4 py-4 text-sm font-semibold tracking-wide text-ivory"
+                      >
+                        I CAN MAKE THIS
+                      </button>
+                      <button
+                        onClick={() => setReplies((p) => ({ ...p, [r.title]: "no" }))}
+                        className="rounded-sm border border-input px-4 py-4 text-sm font-semibold tracking-wide text-foreground/70"
+                      >
+                        NOT NOW
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })}

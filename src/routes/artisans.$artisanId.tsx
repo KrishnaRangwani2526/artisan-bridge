@@ -1,11 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { artisans } from "@/lib/data";
+import { artisans, productsByArtisan } from "@/lib/data";
 
 export const Route = createFileRoute("/artisans/$artisanId")({
   loader: ({ params }) => {
     const artisan = artisans.find((a) => a.id === params.artisanId);
     if (!artisan) throw notFound();
-    return { artisan };
+    return { artisan, work: productsByArtisan(artisan.id) };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/artisans/$artisanId")({
 });
 
 function ArtisanProfile() {
-  const { artisan } = Route.useLoaderData();
+  const { artisan, work } = Route.useLoaderData();
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -74,12 +74,19 @@ function ArtisanProfile() {
             </Link>
           </div>
 
-          <h2 className="mt-12 mb-6 border-t border-border pt-8 font-display text-3xl">Catalogue</h2>
+          <h2 className="mt-12 mb-6 border-t border-border pt-8 font-display text-3xl">
+            Catalogue — online exhibition
+          </h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {artisan.work.map((w) => (
-              <div key={w.title} className="overflow-hidden rounded-sm border border-border">
+            {work.map((w) => (
+              <Link
+                key={w.id}
+                to="/products/$productId"
+                params={{ productId: w.id }}
+                className="overflow-hidden rounded-sm border border-border"
+              >
                 <img
-                  src={w.image}
+                  src={w.images[0]}
                   alt={w.title}
                   width={816}
                   height={816}
@@ -88,9 +95,12 @@ function ArtisanProfile() {
                 />
                 <div className="p-3">
                   <p className="font-display text-sm">{w.title}</p>
-                  <p className="text-xs text-muted-foreground">{w.price}</p>
+                  <p className="text-xs text-terra">₹{w.price.toLocaleString("en-IN")}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Bulk ₹{w.bulkPrice.toLocaleString("en-IN")} · MOQ {w.moq}
+                  </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
