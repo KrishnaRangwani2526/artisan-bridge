@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtisanAppRouteImport } from './routes/artisan-app'
 import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as FairsRouteImport } from './routes/fairs'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PostRouteImport } from './routes/post'
 import { Route as RequirementRouteImport } from './routes/requirement'
 import { Route as ArtisansArtisanIdRouteImport } from './routes/artisans.$artisanId'
@@ -30,6 +32,16 @@ const ArtisanAppRoute = ArtisanAppRouteImport.update({
 const DiscoverRoute = DiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FairsRoute = FairsRouteImport.update({
+  id: '/fairs',
+  path: '/fairs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostRoute = PostRouteImport.update({
@@ -57,6 +69,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/artisan-app': typeof ArtisanAppRoute
   '/discover': typeof DiscoverRoute
+  '/fairs': typeof FairsRoute
+  '/orders': typeof OrdersRoute
   '/post': typeof PostRoute
   '/requirement': typeof RequirementRoute
   '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
@@ -66,6 +80,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/artisan-app': typeof ArtisanAppRoute
   '/discover': typeof DiscoverRoute
+  '/fairs': typeof FairsRoute
+  '/orders': typeof OrdersRoute
   '/post': typeof PostRoute
   '/requirement': typeof RequirementRoute
   '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
@@ -76,6 +92,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/artisan-app': typeof ArtisanAppRoute
   '/discover': typeof DiscoverRoute
+  '/fairs': typeof FairsRoute
+  '/orders': typeof OrdersRoute
   '/post': typeof PostRoute
   '/requirement': typeof RequirementRoute
   '/artisans/$artisanId': typeof ArtisansArtisanIdRoute
@@ -87,6 +105,8 @@ export interface FileRouteTypes {
     | '/'
     | '/artisan-app'
     | '/discover'
+    | '/fairs'
+    | '/orders'
     | '/post'
     | '/requirement'
     | '/artisans/$artisanId'
@@ -96,6 +116,8 @@ export interface FileRouteTypes {
     | '/'
     | '/artisan-app'
     | '/discover'
+    | '/fairs'
+    | '/orders'
     | '/post'
     | '/requirement'
     | '/artisans/$artisanId'
@@ -105,6 +127,8 @@ export interface FileRouteTypes {
     | '/'
     | '/artisan-app'
     | '/discover'
+    | '/fairs'
+    | '/orders'
     | '/post'
     | '/requirement'
     | '/artisans/$artisanId'
@@ -115,6 +139,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArtisanAppRoute: typeof ArtisanAppRoute
   DiscoverRoute: typeof DiscoverRoute
+  FairsRoute: typeof FairsRoute
+  OrdersRoute: typeof OrdersRoute
   PostRoute: typeof PostRoute
   RequirementRoute: typeof RequirementRoute
   ArtisansArtisanIdRoute: typeof ArtisansArtisanIdRoute
@@ -142,6 +168,20 @@ declare module '@tanstack/react-router' {
       path: '/discover'
       fullPath: '/discover'
       preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fairs': {
+      id: '/fairs'
+      path: '/fairs'
+      fullPath: '/fairs'
+      preLoaderRoute: typeof FairsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/post': {
@@ -179,6 +219,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArtisanAppRoute: ArtisanAppRoute,
   DiscoverRoute: DiscoverRoute,
+  FairsRoute: FairsRoute,
+  OrdersRoute: OrdersRoute,
   PostRoute: PostRoute,
   RequirementRoute: RequirementRoute,
   ArtisansArtisanIdRoute: ArtisansArtisanIdRoute,
