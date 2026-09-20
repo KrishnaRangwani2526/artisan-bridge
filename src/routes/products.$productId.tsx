@@ -37,6 +37,8 @@ function ProductPage() {
   const [qty, setQty] = useState(1);
   const [mode, setMode] = useState<"customer" | "bulk">("customer");
   const [placed, setPlaced] = useState<null | "order" | "quote">(null);
+  const [orderId, setOrderId] = useState<string | null>(null);
+  const [buyer, setBuyer] = useState({ name: "", phone: "", city: product.city });
 
   const bulk = mode === "bulk";
   const unit = bulk ? product.bulkPrice : product.price;
