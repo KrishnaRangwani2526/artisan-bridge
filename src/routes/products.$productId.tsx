@@ -144,18 +144,28 @@ function ProductPage() {
             <div className="mt-4 space-y-3 text-sm">
               <label className="block">
                 <span className="mb-1 block text-xs text-muted-foreground">{t("Your name")}</span>
-                <input className="w-full rounded-sm border border-input bg-card px-3 py-2 outline-hidden focus:border-terra" />
+                <input
+                  value={buyer.name}
+                  onChange={(e) => setBuyer((b) => ({ ...b, name: e.target.value }))}
+                  className="w-full rounded-sm border border-input bg-card px-3 py-2 outline-hidden focus:border-terra"
+                />
               </label>
               <label className="block">
                 <span className="mb-1 block text-xs text-muted-foreground">{t("Mobile number")}</span>
                 <input
                   inputMode="numeric"
+                  value={buyer.phone}
+                  onChange={(e) => setBuyer((b) => ({ ...b, phone: e.target.value }))}
                   className="w-full rounded-sm border border-input bg-card px-3 py-2 outline-hidden focus:border-terra"
                 />
               </label>
               <label className="block">
                 <span className="mb-1 block text-xs text-muted-foreground">{t("Delivery city")}</span>
-                <input className="w-full rounded-sm border border-input bg-card px-3 py-2 outline-hidden focus:border-terra" />
+                <input
+                  value={buyer.city}
+                  onChange={(e) => setBuyer((b) => ({ ...b, city: e.target.value }))}
+                  className="w-full rounded-sm border border-input bg-card px-3 py-2 outline-hidden focus:border-terra"
+                />
               </label>
             </div>
 
@@ -165,8 +175,24 @@ function ProductPage() {
             </div>
 
             <button
-              onClick={() => setPlaced(bulk ? "quote" : "order")}
-              className="mt-4 w-full rounded-sm bg-terra px-4 py-3 text-sm font-semibold text-ivory"
+              onClick={() => {
+                const order = createOrder({
+                  kind: bulk ? "bulk" : "single",
+                  productId: product.id,
+                  productTitle: product.title,
+                  image: product.images[0],
+                  artisanId: artisan.id,
+                  quantity: count,
+                  unitPrice: unit,
+                  buyerName: buyer.name || "Guest buyer",
+                  buyerPhone: buyer.phone,
+                  city: buyer.city || product.city,
+                  expectedDays: product.makeDays,
+                });
+                setOrderId(order.id);
+                setPlaced(bulk ? "quote" : "order");
+              }}
+              className="lift mt-4 w-full rounded-sm bg-terra px-4 py-3 text-sm font-semibold text-ivory"
             >
               {bulk ? t("Ask for bulk quote") : t("Place order")}
             </button>
@@ -175,18 +201,18 @@ function ProductPage() {
             </p>
 
             {placed && (
-              <p className="mt-3 rounded-sm border border-terra/40 bg-terra/10 px-3 py-3 text-sm text-terra">
+              <p className="reveal mt-3 rounded-sm border border-terra/40 bg-terra/10 px-3 py-3 text-sm text-terra">
                 {placed === "order"
-                  ? `${t("Order placed")} — ${artisan.name} will confirm within a few hours and ship in about ${product.makeDays} ${t("days")}.`
-                  : `Requirement sent to ${artisan.name} for ${count} pcs. They can accept or decline, and you will see the reply under Responses.`}
+                  ? `${t("Order placed")} ${orderId ? `(${orderId})` : ""} — ${t("a notification is now on")} ${artisan.name}${t("'s artisan app. It lands in their inventory and they ship in about")} ${product.makeDays} ${t("days")}.`
+                  : `${t("Bulk requirement sent")} ${orderId ? `(${orderId})` : ""} — ${count} pcs. ${t("Every capable artisan sees it in their app and can accept; you then choose the maker.")}`}
               </p>
             )}
-            {placed === "quote" && (
+            {placed && (
               <Link
-                to="/requirement"
+                to="/orders"
                 className="mt-3 block rounded-sm border border-input px-4 py-2 text-center text-xs"
               >
-                {t("Responses")}
+                {t("Track this order")}
               </Link>
             )}
           </div>
