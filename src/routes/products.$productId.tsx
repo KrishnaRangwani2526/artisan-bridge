@@ -100,6 +100,20 @@ function ProductPage() {
           <p className="mt-1 text-sm text-muted-foreground">
             {product.city} · ♥ {product.likes}
           </p>
+          {fairsForProduct(product.id).length > 0 && (
+            <p className="mt-3 flex flex-wrap gap-2">
+              {fairsForProduct(product.id).map((f) => (
+                <Link
+                  key={f.id}
+                  to="/fairs"
+                  className="rounded-full border border-brass/50 bg-brass/10 px-3 py-1 text-xs text-terra"
+                >
+                  {t("Shown at")} {f.name}
+                </Link>
+              ))}
+            </p>
+          )}
+
 
           <div className="mt-5 rounded-sm border border-input p-4">
             <div className="mb-4 flex rounded-sm border border-input p-1">
