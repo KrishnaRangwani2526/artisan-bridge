@@ -196,7 +196,7 @@ function ProductPage() {
                   kind: bulk ? "bulk" : "single",
                   productId: product.id,
                   productTitle: product.title,
-                  image: product.images[0],
+                  image: product.images[0] ?? "",
                   artisanId: artisan.id,
                   quantity: count,
                   unitPrice: unit,

@@ -58,7 +58,7 @@ export type Order = {
   trackingId: string | null;
   courier: string | null;
   expectedDays: number;
-  events: { stage: OrderStage; at: string; note?: string }[];
+  events: { stage: OrderStage; at: string; note?: string | undefined }[];
 };
 
 const KEY = "esetu-orders";
