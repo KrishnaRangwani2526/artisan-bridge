@@ -98,7 +98,7 @@ export function getOrder(id: string) {
 }
 
 export function emptyOrders(): Order[] {
-  return EMPTY;
+  return EMPTY_SNAPSHOT;
 }
 
 function stamp(order: Order, stage: OrderStage, note?: string): Order {
