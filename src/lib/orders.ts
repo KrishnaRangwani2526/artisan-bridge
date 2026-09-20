@@ -63,12 +63,13 @@ export type Order = {
 
 const KEY = "esetu-orders";
 
+const EMPTY_SNAPSHOT: Order[] = [];
 let cache: Order[] | null = null;
 const listeners = new Set<() => void>();
 
 function read(): Order[] {
   if (cache) return cache;
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return EMPTY_SNAPSHOT;
   try {
     cache = JSON.parse(window.localStorage.getItem(KEY) ?? "[]") as Order[];
   } catch {
@@ -96,8 +97,10 @@ export function getOrder(id: string) {
   return read().find((o) => o.id === id);
 }
 
+const EMPTY: Order[] = [];
+
 export function emptyOrders(): Order[] {
-  return [];
+  return EMPTY;
 }
 
 function stamp(order: Order, stage: OrderStage, note?: string): Order {
