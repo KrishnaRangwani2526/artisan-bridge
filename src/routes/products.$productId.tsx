@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { getArtisan, getProduct, productsByArtisan } from "@/lib/data";
+import { fairsForProduct } from "@/lib/fairs";
+import { createOrder } from "@/lib/orders";
 import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/products/$productId")({
