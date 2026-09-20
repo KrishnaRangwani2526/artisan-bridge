@@ -58,17 +58,18 @@ export type Order = {
   trackingId: string | null;
   courier: string | null;
   expectedDays: number;
-  events: { stage: OrderStage; at: string; note?: string }[];
+  events: { stage: OrderStage; at: string; note?: string | undefined }[];
 };
 
 const KEY = "esetu-orders";
 
+const EMPTY_SNAPSHOT: Order[] = [];
 let cache: Order[] | null = null;
 const listeners = new Set<() => void>();
 
 function read(): Order[] {
   if (cache) return cache;
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return EMPTY_SNAPSHOT;
   try {
     cache = JSON.parse(window.localStorage.getItem(KEY) ?? "[]") as Order[];
   } catch {
@@ -97,7 +98,7 @@ export function getOrder(id: string) {
 }
 
 export function emptyOrders(): Order[] {
-  return [];
+  return EMPTY_SNAPSHOT;
 }
 
 function stamp(order: Order, stage: OrderStage, note?: string): Order {

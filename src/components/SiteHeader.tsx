@@ -4,8 +4,10 @@ import { languages, useLang } from "@/lib/i18n";
 
 const nav = [
   { to: "/discover", label: "Discover" },
+  { to: "/fairs", label: "Craft fairs" },
   { to: "/post", label: "Post a need" },
   { to: "/requirement", label: "Responses" },
+  { to: "/orders", label: "Your orders" },
   { to: "/artisan-app", label: "For artisans" },
 ] as const;
 

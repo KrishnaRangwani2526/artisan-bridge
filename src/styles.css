@@ -99,3 +99,78 @@
   text-transform: uppercase;
   letter-spacing: 0.25em;
 }
+
+/* --- motion ------------------------------------------------------------ */
+
+@keyframes esetu-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes esetu-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Fades and lifts a block in on load. Stagger with inline animation-delay. */
+@utility reveal {
+  animation: esetu-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Ink wipe, used on rules and hero underlines. */
+@utility wipe {
+  animation: esetu-wipe 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Cards that respond to the cursor without looking like a template. */
+@utility lift {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.4s ease,
+    border-color 0.3s ease;
+}
+
+.lift:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--terra) 45%, transparent);
+  box-shadow: 0 14px 34px -22px oklch(0.176 0.008 80 / 55%);
+}
+
+.lift img {
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.lift:hover img {
+  transform: scale(1.035);
+}
+
+/* Faint handmade-paper grain so surfaces don't read as flat CSS. */
+@utility paper {
+  background-image:
+    radial-gradient(oklch(0.176 0.008 80 / 4%) 1px, transparent 1.1px),
+    radial-gradient(oklch(0.176 0.008 80 / 3%) 1px, transparent 1.1px);
+  background-position:
+    0 0,
+    9px 11px;
+  background-size: 18px 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
