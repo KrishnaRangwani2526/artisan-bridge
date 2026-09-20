@@ -97,7 +97,6 @@ export function getOrder(id: string) {
   return read().find((o) => o.id === id);
 }
 
-
 export function emptyOrders(): Order[] {
   return EMPTY;
 }
