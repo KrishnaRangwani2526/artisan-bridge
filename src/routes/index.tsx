@@ -31,40 +31,97 @@ const stats = [
 function Index() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 pt-12 pb-8 sm:px-6">
-        <p className="eyebrow mb-6 text-terra">The capability marketplace</p>
+      <section className="paper mx-auto max-w-6xl px-4 pt-12 pb-8 sm:px-6">
+        <p className="eyebrow reveal mb-6 text-terra">The capability marketplace</p>
         <div className="grid items-end gap-10 md:grid-cols-12">
           <div className="md:col-span-7">
-            <h1 className="font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
+            <h1 className="reveal font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
               Tell us what you need.
               <br />
               <span className="italic text-terra">Capable artisans</span> will answer.
             </h1>
+            <div className="wipe mt-6 h-px w-full bg-terra/40" style={{ animationDelay: "300ms" }} />
           </div>
-          <div className="md:col-span-5">
+          <div className="reveal md:col-span-5" style={{ animationDelay: "140ms" }}>
             <p className="leading-relaxed text-foreground/70">
               E-Setu is a digital bridge between buyers and artisans — no technical complexity, no
               seller panels. Post a requirement, watch artisans respond, then choose who makes it.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/post" className="rounded-sm bg-primary px-5 py-3 text-sm text-primary-foreground">
+              <Link
+                to="/post"
+                className="lift rounded-sm bg-primary px-5 py-3 text-sm text-primary-foreground"
+              >
                 Post a requirement
               </Link>
-              <Link to="/discover" className="rounded-sm border border-input px-5 py-3 text-sm">
+              <Link to="/discover" className="lift rounded-sm border border-input px-5 py-3 text-sm">
                 Explore catalogues
               </Link>
             </div>
           </div>
         </div>
         <div className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-6 text-sm md:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label}>
+          {stats.map((s, i) => (
+            <div key={s.label} className="reveal" style={{ animationDelay: `${200 + i * 70}ms` }}>
               <p className="font-display text-2xl">{s.value}</p>
               <p className="text-muted-foreground">{s.label}</p>
             </div>
           ))}
         </div>
       </section>
+
+      <section className="mx-auto max-w-6xl border-t border-border px-4 py-12 sm:px-6">
+        <div className="mb-8 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="font-display text-3xl">The melas, open all year</h2>
+          <Link to="/fairs" className="eyebrow text-terra">
+            All craft fairs →
+          </Link>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {fairs.slice(0, 3).map((f, i) => (
+            <Link
+              key={f.id}
+              to="/fairs"
+              className="lift reveal rounded-sm border border-border bg-card p-5"
+              style={{ animationDelay: `${i * 80}ms` }}
+            >
+              <p className="eyebrow mb-2 text-terra">{f.since ? `Since ${f.since}` : "Annual"}</p>
+              <p className="font-display text-xl leading-tight">{f.name}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {f.place} · {f.season}
+              </p>
+              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-foreground/70">{f.about}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl border-t border-border px-4 py-12 sm:px-6">
+        <h2 className="font-display text-3xl">Two apps, one bridge</h2>
+        <p className="mt-3 max-w-2xl leading-relaxed text-foreground/70">
+          Artisans never fill a form here. Their catalogue comes from their own app, and every order
+          you place lands there as a notification.
+        </p>
+        <ol className="mt-8 grid gap-4 md:grid-cols-4">
+          {[
+            ["Catalogue arrives", "The artisan builds a catalogue in their app; E-Setu fills the profile, photos, prices and minimum quantities on its own."],
+            ["You buy or ask", "A single buy or a bulk requirement becomes a notification on the artisan's phone."],
+            ["Artisan accepts", "Single orders drop into their inventory. For bulk, several artisans can accept and you pick one."],
+            ["Delivery", "The maker books nearby logistics and marks it shipped; your timeline updates here."],
+          ].map(([title, body], i) => (
+            <li
+              key={title}
+              className="reveal rounded-sm border border-border p-5"
+              style={{ animationDelay: `${i * 70}ms` }}
+            >
+              <p className="eyebrow mb-2 text-brass">Step {i + 1}</p>
+              <p className="font-display text-lg">{title}</p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/70">{body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
 
       <section className="mx-auto max-w-6xl border-t border-border px-4 py-12 sm:px-6">
         <div className="mb-8 flex flex-wrap items-baseline justify-between gap-2">
