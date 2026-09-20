@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { artisans, catalogue } from "@/lib/data";
+import { fairs } from "@/lib/fairs";
 import sketchTable from "@/assets/sketch-table.jpg";
 
 export const Route = createFileRoute("/")({
